@@ -81,6 +81,9 @@
     <Compile Include="DAL\Project.cs">
       <DependentUpon>ProcurementModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ProjectEmployeeDetail.cs">
+      <DependentUpon>ProcurementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\_IProcurementRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

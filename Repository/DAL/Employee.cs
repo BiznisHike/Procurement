@@ -14,6 +14,12 @@ namespace Repository.DAL
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.ProjectEmployeeDetails = new HashSet<ProjectEmployeeDetail>();
+        }
+    
         public decimal EmployeeCode { get; set; }
         public string EmployeeName { get; set; }
         public Nullable<short> EmployeeTypeCode { get; set; }
@@ -22,6 +28,7 @@ namespace Repository.DAL
         public string Password { get; set; }
     
         public virtual EmployeeType EmployeeType { get; set; }
-        public virtual Project Project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectEmployeeDetail> ProjectEmployeeDetails { get; set; }
     }
 }

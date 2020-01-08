@@ -65,6 +65,14 @@
           <Property Name="Customer" Type="nvarchar" MaxLength="50" />
           <Property Name="EndUser" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="ProjectEmployeeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="decimal" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeCode" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="ProjectCode" Type="decimal" Precision="10" Scale="0" />
+        </EntityType>
         <Association Name="FK_BOM_BOMType">
           <End Role="BOMType" Type="Self.BOMType" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -107,16 +115,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Project1">
+        <Association Name="FK_ProjectEmployeeDetail_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectEmployeeDetail" Type="Self.ProjectEmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeCode" />
+            </Principal>
+            <Dependent Role="ProjectEmployeeDetail">
+              <PropertyRef Name="EmployeeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectEmployeeDetail_Project">
           <End Role="Project" Type="Self.Project" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="ProjectEmployeeDetail" Type="Self.ProjectEmployeeDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
               <PropertyRef Name="ProjectCode" />
             </Principal>
-            <Dependent Role="Employee">
+            <Dependent Role="ProjectEmployeeDetail">
               <PropertyRef Name="ProjectCode" />
             </Dependent>
           </ReferentialConstraint>
@@ -127,6 +149,7 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeType" EntityType="Self.EmployeeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectEmployeeDetail" EntityType="Self.ProjectEmployeeDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BOM_BOMType" Association="Self.FK_BOM_BOMType">
             <End Role="BOMType" EntitySet="BOMType" />
             <End Role="BOM" EntitySet="BOM" />
@@ -139,9 +162,13 @@
             <End Role="EmployeeType" EntitySet="EmployeeType" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Project1" Association="Self.FK_Employee_Project1">
-            <End Role="Project" EntitySet="Project" />
+          <AssociationSet Name="FK_ProjectEmployeeDetail_Employee" Association="Self.FK_ProjectEmployeeDetail_Employee">
             <End Role="Employee" EntitySet="Employee" />
+            <End Role="ProjectEmployeeDetail" EntitySet="ProjectEmployeeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectEmployeeDetail_Project" Association="Self.FK_ProjectEmployeeDetail_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectEmployeeDetail" EntitySet="ProjectEmployeeDetail" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -166,9 +193,14 @@
             <End Role="EmployeeType" EntitySet="EmployeeTypes" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Project1" Association="ProcurementModel.FK_Employee_Project1">
-            <End Role="Project" EntitySet="Projects" />
+          <EntitySet Name="ProjectEmployeeDetails" EntityType="ProcurementModel.ProjectEmployeeDetail" />
+          <AssociationSet Name="FK_ProjectEmployeeDetail_Employee" Association="ProcurementModel.FK_ProjectEmployeeDetail_Employee">
             <End Role="Employee" EntitySet="Employees" />
+            <End Role="ProjectEmployeeDetail" EntitySet="ProjectEmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectEmployeeDetail_Project" Association="ProcurementModel.FK_ProjectEmployeeDetail_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectEmployeeDetail" EntitySet="ProjectEmployeeDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BOM">
@@ -216,9 +248,9 @@
           <Property Name="EmployeeTypeCode" Type="Int16" />
           <Property Name="ProjectCode" Type="Decimal" Precision="10" Scale="0" />
           <NavigationProperty Name="EmployeeType" Relationship="ProcurementModel.FK_Employee_EmployeeType" FromRole="Employee" ToRole="EmployeeType" />
-          <NavigationProperty Name="Project" Relationship="ProcurementModel.FK_Employee_Project1" FromRole="Employee" ToRole="Project" />
           <Property Name="Manager" Type="Decimal" Precision="10" Scale="0" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProjectEmployeeDetails" Relationship="ProcurementModel.FK_ProjectEmployeeDetail_Employee" FromRole="Employee" ToRole="ProjectEmployeeDetail" />
         </EntityType>
         <EntityType Name="EmployeeType">
           <Key>
@@ -237,7 +269,7 @@
           <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EndUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BOMs" Relationship="ProcurementModel.FK_BOM_Project" FromRole="Project" ToRole="BOM" />
-          <NavigationProperty Name="Employees" Relationship="ProcurementModel.FK_Employee_Project1" FromRole="Project" ToRole="Employee" />
+          <NavigationProperty Name="ProjectEmployeeDetails" Relationship="ProcurementModel.FK_ProjectEmployeeDetail_Project" FromRole="Project" ToRole="ProjectEmployeeDetail" />
         </EntityType>
         <Association Name="FK_BOM_BOMType">
           <End Type="ProcurementModel.BOMType" Role="BOMType" Multiplicity="0..1">
@@ -281,16 +313,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Project1">
-          <End Type="ProcurementModel.Project" Role="Project" Multiplicity="0..1">
+        <EntityType Name="ProjectEmployeeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Nullable="false" Precision="10" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeCode" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="ProjectCode" Type="Decimal" Precision="10" Scale="0" />
+          <NavigationProperty Name="Employee" Relationship="ProcurementModel.FK_ProjectEmployeeDetail_Employee" FromRole="ProjectEmployeeDetail" ToRole="Employee" />
+          <NavigationProperty Name="Project" Relationship="ProcurementModel.FK_ProjectEmployeeDetail_Project" FromRole="ProjectEmployeeDetail" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_ProjectEmployeeDetail_Employee">
+          <End Type="ProcurementModel.Employee" Role="Employee" Multiplicity="0..1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="ProcurementModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="ProcurementModel.ProjectEmployeeDetail" Role="ProjectEmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeCode" />
+            </Principal>
+            <Dependent Role="ProjectEmployeeDetail">
+              <PropertyRef Name="EmployeeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectEmployeeDetail_Project">
+          <End Type="ProcurementModel.Project" Role="Project" Multiplicity="0..1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProcurementModel.ProjectEmployeeDetail" Role="ProjectEmployeeDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
               <PropertyRef Name="ProjectCode" />
             </Principal>
-            <Dependent Role="Employee">
+            <Dependent Role="ProjectEmployeeDetail">
               <PropertyRef Name="ProjectCode" />
             </Dependent>
           </ReferentialConstraint>
@@ -363,6 +419,15 @@
                 <ScalarProperty Name="Customer" ColumnName="Customer" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectEmployeeDetails">
+            <EntityTypeMapping TypeName="ProcurementModel.ProjectEmployeeDetail">
+              <MappingFragment StoreEntitySet="ProjectEmployeeDetail">
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

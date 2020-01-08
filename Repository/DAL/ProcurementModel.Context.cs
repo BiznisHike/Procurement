@@ -30,5 +30,6 @@ namespace Repository.DAL
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeType> EmployeeTypes { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectEmployeeDetail> ProjectEmployeeDetails { get; set; }
     }
 }

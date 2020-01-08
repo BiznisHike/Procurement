@@ -65,7 +65,7 @@ namespace Procurement
 
                 _dtProjects = ToDataTable<Project>(_LstProjects);
                 _dtProjects.Columns.Remove("BOMs");
-                _dtProjects.Columns.Remove("Employees");
+                _dtProjects.Columns.Remove("ProjectEmployeeDetails");
 
                 DataView dv = _dtProjects.DefaultView;
                 dv.Sort = "ProjectCode desc";
@@ -648,7 +648,7 @@ namespace Procurement
         {
             if (splitContainer1.SplitterDistance < 51)
             {
-                splitContainer1.SplitterDistance = 200;
+                splitContainer1.SplitterDistance = 400;
             }
             else
             {

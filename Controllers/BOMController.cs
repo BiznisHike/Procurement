@@ -52,7 +52,7 @@ namespace Procurement.Controllers
             {
                 interfaceObj.InsertModel(bomModel);
             }
-            if (_gLstBomModel.Count > 0) interfaceObj.Save();
+             interfaceObj.Save();
             //}
 
         }
