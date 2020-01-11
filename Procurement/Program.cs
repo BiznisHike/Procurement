@@ -18,6 +18,9 @@ namespace Procurement
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());
+            //Application.Run(new FrmLogin());
+            //Application.Run(new FrmEmployee());
+
         }
     }
 }

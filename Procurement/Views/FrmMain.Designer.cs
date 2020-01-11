@@ -32,24 +32,33 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.lnkEmployees = new System.Windows.Forms.LinkLabel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblProject = new System.Windows.Forms.Label();
             this.lnkProjects = new System.Windows.Forms.LinkLabel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblEmployee = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.pnlProjects = new System.Windows.Forms.Panel();
+            this.pnlEmployees = new System.Windows.Forms.Panel();
+            this.lblProjectDesc = new System.Windows.Forms.Label();
+            this.lblEmployeeDesc = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.pnlProjects.SuspendLayout();
+            this.pnlEmployees.SuspendLayout();
             this.SuspendLayout();
             // 
             // lnkEmployees
             // 
             this.lnkEmployees.AutoSize = true;
+            this.lnkEmployees.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkEmployees.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkEmployees.Location = new System.Drawing.Point(135, 168);
+            this.lnkEmployees.Location = new System.Drawing.Point(72, 10);
             this.lnkEmployees.Name = "lnkEmployees";
-            this.lnkEmployees.Size = new System.Drawing.Size(185, 17);
+            this.lnkEmployees.Size = new System.Drawing.Size(249, 24);
             this.lnkEmployees.TabIndex = 1;
             this.lnkEmployees.TabStop = true;
             this.lnkEmployees.Text = "Employees and Permissions";
             this.lnkEmployees.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEmployees_LinkClicked);
+            this.lnkEmployees.MouseEnter += new System.EventHandler(this.pnlEmployees_MouseEnter);
+            this.lnkEmployees.MouseLeave += new System.EventHandler(this.pnlEmployees_MouseLeave);
             // 
             // imageList1
             // 
@@ -58,62 +67,126 @@
             this.imageList1.Images.SetKeyName(0, "Table.bmp");
             this.imageList1.Images.SetKeyName(1, "User group.bmp");
             // 
-            // label2
+            // lblProject
             // 
-            this.label2.ImageKey = "Table.bmp";
-            this.label2.ImageList = this.imageList1;
-            this.label2.Location = new System.Drawing.Point(75, 92);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 43);
-            this.label2.TabIndex = 5;
+            this.lblProject.ImageKey = "Table.bmp";
+            this.lblProject.ImageList = this.imageList1;
+            this.lblProject.Location = new System.Drawing.Point(12, 9);
+            this.lblProject.Name = "lblProject";
+            this.lblProject.Size = new System.Drawing.Size(51, 43);
+            this.lblProject.TabIndex = 5;
+            this.lblProject.Click += new System.EventHandler(this.lblProject_Click);
+            this.lblProject.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
+            this.lblProject.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
             // 
             // lnkProjects
             // 
             this.lnkProjects.AutoSize = true;
+            this.lnkProjects.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkProjects.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkProjects.Location = new System.Drawing.Point(135, 102);
+            this.lnkProjects.Location = new System.Drawing.Point(72, 9);
             this.lnkProjects.Name = "lnkProjects";
-            this.lnkProjects.Size = new System.Drawing.Size(129, 17);
+            this.lnkProjects.Size = new System.Drawing.Size(171, 24);
             this.lnkProjects.TabIndex = 6;
             this.lnkProjects.TabStop = true;
             this.lnkProjects.Text = "Projects and BOMs";
             this.lnkProjects.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkProjects_LinkClicked);
+            this.lnkProjects.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
+            this.lnkProjects.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
             // 
-            // label3
+            // lblEmployee
             // 
-            this.label3.ImageKey = "User group.bmp";
-            this.label3.ImageList = this.imageList1;
-            this.label3.Location = new System.Drawing.Point(75, 154);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 43);
-            this.label3.TabIndex = 7;
+            this.lblEmployee.ImageKey = "User group.bmp";
+            this.lblEmployee.ImageList = this.imageList1;
+            this.lblEmployee.Location = new System.Drawing.Point(12, 10);
+            this.lblEmployee.Name = "lblEmployee";
+            this.lblEmployee.Size = new System.Drawing.Size(51, 43);
+            this.lblEmployee.TabIndex = 7;
+            this.lblEmployee.Click += new System.EventHandler(this.lblEmployee_Click);
+            this.lblEmployee.MouseEnter += new System.EventHandler(this.pnlEmployees_MouseEnter);
+            this.lblEmployee.MouseLeave += new System.EventHandler(this.pnlEmployees_MouseLeave);
+            // 
+            // pnlProjects
+            // 
+            this.pnlProjects.Controls.Add(this.lblProjectDesc);
+            this.pnlProjects.Controls.Add(this.lblProject);
+            this.pnlProjects.Controls.Add(this.lnkProjects);
+            this.pnlProjects.Location = new System.Drawing.Point(44, 27);
+            this.pnlProjects.Name = "pnlProjects";
+            this.pnlProjects.Size = new System.Drawing.Size(400, 100);
+            this.pnlProjects.TabIndex = 8;
+            
+            this.pnlProjects.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlProjects_MouseClick);
+            this.pnlProjects.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
+            this.pnlProjects.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
+            // 
+            // pnlEmployees
+            // 
+            this.pnlEmployees.Controls.Add(this.lblEmployeeDesc);
+            this.pnlEmployees.Controls.Add(this.lblEmployee);
+            this.pnlEmployees.Controls.Add(this.lnkEmployees);
+            this.pnlEmployees.Location = new System.Drawing.Point(44, 133);
+            this.pnlEmployees.Name = "pnlEmployees";
+            this.pnlEmployees.Size = new System.Drawing.Size(400, 100);
+            this.pnlEmployees.TabIndex = 9;
+            this.pnlEmployees.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlEmployees_MouseClick);
+            this.pnlEmployees.MouseEnter += new System.EventHandler(this.pnlEmployees_MouseEnter);
+            this.pnlEmployees.MouseLeave += new System.EventHandler(this.pnlEmployees_MouseLeave);
+            // 
+            // lblProjectDesc
+            // 
+            this.lblProjectDesc.AutoSize = true;
+            this.lblProjectDesc.Location = new System.Drawing.Point(73, 35);
+            this.lblProjectDesc.Name = "lblProjectDesc";
+            this.lblProjectDesc.Size = new System.Drawing.Size(256, 17);
+            this.lblProjectDesc.TabIndex = 7;
+            this.lblProjectDesc.Text = "Create Update Delete Project and BOM";
+            this.lblProjectDesc.Click += new System.EventHandler(this.lblProjectDesc_Click);
+            this.lblProjectDesc.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
+            this.lblProjectDesc.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
+            // 
+            // lblEmployeeDesc
+            // 
+            this.lblEmployeeDesc.Location = new System.Drawing.Point(73, 36);
+            this.lblEmployeeDesc.Name = "lblEmployeeDesc";
+            this.lblEmployeeDesc.Size = new System.Drawing.Size(270, 40);
+            this.lblEmployeeDesc.TabIndex = 8;
+            this.lblEmployeeDesc.Text = "Create Update and Delete Employee\r\nSet Permissions on Employee";
+            this.lblEmployeeDesc.Click += new System.EventHandler(this.lblEmployeeDesc_Click);
+            this.lblEmployeeDesc.MouseEnter += new System.EventHandler(this.pnlEmployees_MouseEnter);
+            this.lblEmployeeDesc.MouseLeave += new System.EventHandler(this.pnlEmployees_MouseLeave);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lnkProjects);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lnkEmployees);
+            this.ClientSize = new System.Drawing.Size(1145, 613);
+            this.Controls.Add(this.pnlProjects);
+            this.Controls.Add(this.pnlEmployees);
             this.Name = "FrmMain";
             this.Text = "Procurement";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            this.pnlProjects.ResumeLayout(false);
+            this.pnlProjects.PerformLayout();
+            this.pnlEmployees.ResumeLayout(false);
+            this.pnlEmployees.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.LinkLabel lnkEmployees;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblProject;
         private System.Windows.Forms.LinkLabel lnkProjects;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblEmployee;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.Panel pnlProjects;
+        private System.Windows.Forms.Panel pnlEmployees;
+        private System.Windows.Forms.Label lblProjectDesc;
+        private System.Windows.Forms.Label lblEmployeeDesc;
     }
 }
