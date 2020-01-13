@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Procurement.Classes
+namespace StaticClasses
 {
     public static class LoginInfo
     {
         public static Employee LoginEmployee;
     }
+
 }

@@ -25,6 +25,10 @@ namespace Repository.DAL
         public string ProjectName { get; set; }
         public string Customer { get; set; }
         public string EndUser { get; set; }
+        public Nullable<decimal> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<decimal> UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOM> BOMs { get; set; }

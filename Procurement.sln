@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controllers\Controllers.csproj", "{93B89EFE-DF9F-493A-A612-29E1696909BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticClasses", "StaticClasses\StaticClasses.csproj", "{2E0D355D-9A0D-425B-8BE3-7016E1022BF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{93B89EFE-DF9F-493A-A612-29E1696909BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B89EFE-DF9F-493A-A612-29E1696909BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B89EFE-DF9F-493A-A612-29E1696909BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0D355D-9A0D-425B-8BE3-7016E1022BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0D355D-9A0D-425B-8BE3-7016E1022BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0D355D-9A0D-425B-8BE3-7016E1022BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0D355D-9A0D-425B-8BE3-7016E1022BF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

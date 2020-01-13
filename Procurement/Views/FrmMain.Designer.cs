@@ -37,9 +37,12 @@
             this.lblEmployee = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.pnlProjects = new System.Windows.Forms.Panel();
-            this.pnlEmployees = new System.Windows.Forms.Panel();
             this.lblProjectDesc = new System.Windows.Forms.Label();
+            this.pnlEmployees = new System.Windows.Forms.Panel();
             this.lblEmployeeDesc = new System.Windows.Forms.Label();
+            this.lnkUserName = new System.Windows.Forms.LinkLabel();
+            this.btnLogOff = new System.Windows.Forms.Button();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.pnlProjects.SuspendLayout();
             this.pnlEmployees.SuspendLayout();
@@ -115,10 +118,21 @@
             this.pnlProjects.Name = "pnlProjects";
             this.pnlProjects.Size = new System.Drawing.Size(400, 100);
             this.pnlProjects.TabIndex = 8;
-            
             this.pnlProjects.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlProjects_MouseClick);
             this.pnlProjects.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
             this.pnlProjects.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
+            // 
+            // lblProjectDesc
+            // 
+            this.lblProjectDesc.AutoSize = true;
+            this.lblProjectDesc.Location = new System.Drawing.Point(73, 35);
+            this.lblProjectDesc.Name = "lblProjectDesc";
+            this.lblProjectDesc.Size = new System.Drawing.Size(256, 17);
+            this.lblProjectDesc.TabIndex = 7;
+            this.lblProjectDesc.Text = "Create Update Delete Project and BOM";
+            this.lblProjectDesc.Click += new System.EventHandler(this.lblProjectDesc_Click);
+            this.lblProjectDesc.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
+            this.lblProjectDesc.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
             // 
             // pnlEmployees
             // 
@@ -133,18 +147,6 @@
             this.pnlEmployees.MouseEnter += new System.EventHandler(this.pnlEmployees_MouseEnter);
             this.pnlEmployees.MouseLeave += new System.EventHandler(this.pnlEmployees_MouseLeave);
             // 
-            // lblProjectDesc
-            // 
-            this.lblProjectDesc.AutoSize = true;
-            this.lblProjectDesc.Location = new System.Drawing.Point(73, 35);
-            this.lblProjectDesc.Name = "lblProjectDesc";
-            this.lblProjectDesc.Size = new System.Drawing.Size(256, 17);
-            this.lblProjectDesc.TabIndex = 7;
-            this.lblProjectDesc.Text = "Create Update Delete Project and BOM";
-            this.lblProjectDesc.Click += new System.EventHandler(this.lblProjectDesc_Click);
-            this.lblProjectDesc.MouseEnter += new System.EventHandler(this.pnlProjects_MouseEnter);
-            this.lblProjectDesc.MouseLeave += new System.EventHandler(this.pnlProjects_MouseLeave);
-            // 
             // lblEmployeeDesc
             // 
             this.lblEmployeeDesc.Location = new System.Drawing.Point(73, 36);
@@ -156,12 +158,49 @@
             this.lblEmployeeDesc.MouseEnter += new System.EventHandler(this.pnlEmployees_MouseEnter);
             this.lblEmployeeDesc.MouseLeave += new System.EventHandler(this.pnlEmployees_MouseLeave);
             // 
+            // lnkUserName
+            // 
+            this.lnkUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkUserName.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkUserName.Location = new System.Drawing.Point(719, 31);
+            this.lnkUserName.Name = "lnkUserName";
+            this.lnkUserName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lnkUserName.Size = new System.Drawing.Size(338, 24);
+            this.lnkUserName.TabIndex = 8;
+            this.lnkUserName.TabStop = true;
+            this.lnkUserName.Text = "User Name";
+            this.lnkUserName.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkUserName_LinkClicked);
+            // 
+            // btnLogOff
+            // 
+            this.btnLogOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogOff.BackColor = System.Drawing.Color.White;
+            this.btnLogOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogOff.ForeColor = System.Drawing.Color.Transparent;
+            this.btnLogOff.ImageKey = "Turn off.png";
+            this.btnLogOff.ImageList = this.imageList2;
+            this.btnLogOff.Location = new System.Drawing.Point(1063, 23);
+            this.btnLogOff.Name = "btnLogOff";
+            this.btnLogOff.Size = new System.Drawing.Size(40, 40);
+            this.btnLogOff.TabIndex = 21;
+            this.btnLogOff.UseVisualStyleBackColor = false;
+            this.btnLogOff.Click += new System.EventHandler(this.btnLogOff_Click);
+            // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "Turn off.png");
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1145, 613);
+            this.Controls.Add(this.btnLogOff);
+            this.Controls.Add(this.lnkUserName);
             this.Controls.Add(this.pnlProjects);
             this.Controls.Add(this.pnlEmployees);
             this.Name = "FrmMain";
@@ -188,5 +227,8 @@
         private System.Windows.Forms.Panel pnlEmployees;
         private System.Windows.Forms.Label lblProjectDesc;
         private System.Windows.Forms.Label lblEmployeeDesc;
+        private System.Windows.Forms.LinkLabel lnkUserName;
+        private System.Windows.Forms.Button btnLogOff;
+        private System.Windows.Forms.ImageList imageList2;
     }
 }

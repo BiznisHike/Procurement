@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 using System.Data.OleDb;
 using Repository.DAL;
 using Procurement.Controllers;
 using System.Reflection;
+using StaticClasses;
 
 namespace Procurement
 {
@@ -20,13 +16,14 @@ namespace Procurement
         ProjectController _pc;
         BOMController _bc;
         List<Project> _LstProjects;
+        ProjectEmployeeDetailController _pedc;
         DataTable _dtProjects;
         DataTable _dtSalesBOM;
         DataTable _dtDesignBOM;
         DataTable _dtActualBOM;
         decimal _projectCode;
         bool _newMode;
-        
+        Project _currentLoadedProject;
         public FrmBOM()
         {
             InitializeComponent();
@@ -36,6 +33,16 @@ namespace Procurement
         {
             try
             {
+                if (LoginInfo.LoginEmployee.EmployeeTypeCode == Constants.EMPLOYEE)
+                {
+                    txtProjectName.Enabled = false;
+                    txtProjectCustomerName.Enabled = false;
+                    txtProjectEndUser.Enabled = false;
+                        
+                    btnNewProject.Enabled = false;
+                    btnLoadBOM.Enabled = false;
+                }
+                
                 _pc = new ProjectController();
                 _LstProjects = _pc.GetModels();
                 //insert into the list
@@ -226,10 +233,13 @@ namespace Procurement
         {
             this.Enabled = false;
             Project projModel;
+            ProjectEmployeeDetail ped;
             if (_newMode == true)
             {
                 //SaveData();
                 projModel = FillProjectModel();
+                projModel.CreatedBy = LoginInfo.LoginEmployee.EmployeeCode;
+                projModel.CreatedDate = DateTime.Now;
                 _pc = new ProjectController(projModel);
                 _pc.Save();
                 //------------------
@@ -249,12 +259,28 @@ namespace Procurement
 
                 dataGridViewProjects.DataSource = _dtProjects;
                 _LstProjects.Add(projModel);
+
+                //------------------
+                
+                ped = new ProjectEmployeeDetail();
+                ped.EmployeeCode = LoginInfo.LoginEmployee.EmployeeCode;//_EmployeeCode;
+                ped.ProjectCode = projModel.ProjectCode;//(decimal)row1["ProjectCode"];
+
+                _pedc = new ProjectEmployeeDetailController(ped);
+                _pedc.Save();
+                //-------------------
+
+
                 _newMode = false;
             }
             else
             {
                 //UpdateData();
                 projModel = FillProjectModel();
+                projModel.CreatedBy = _currentLoadedProject.CreatedBy;
+                projModel.CreatedDate = _currentLoadedProject.CreatedDate;
+                projModel.UpdatedBy = LoginInfo.LoginEmployee.EmployeeCode;
+                projModel.UpdateDate = DateTime.Now;
                 _pc = new ProjectController(projModel);
                 _pc.UpdateModel(projModel);
                 Project proj = _LstProjects.Where(x => x.ProjectCode == projModel.ProjectCode).FirstOrDefault();
@@ -294,6 +320,7 @@ namespace Procurement
 
            
         }
+      
         private List<BOM> FillBOMModel1(ref Project pProjectModel)
         {
             List<BOM> LstObjBom = new List<BOM>();
@@ -503,12 +530,12 @@ namespace Procurement
                 if ( !string.IsNullOrEmpty(txtProjectCode.Text) && _projectCode == decimal.Parse(txtProjectCode.Text)) return;
 
                 _pc = new ProjectController();
-                Project project = _pc.GetModelByID(_projectCode);
-                if (project == null) return;
-                txtProjectCode.Text = project.ProjectCode.ToString();
-                txtProjectName.Text = project.ProjectName;
-                txtProjectCustomerName.Text = project.Customer;
-                txtProjectEndUser.Text = project.Customer;
+                _currentLoadedProject = _pc.GetModelByID(_projectCode);
+                if (_currentLoadedProject == null) return;
+                txtProjectCode.Text = _currentLoadedProject.ProjectCode.ToString();
+                txtProjectName.Text = _currentLoadedProject.ProjectName;
+                txtProjectCustomerName.Text = _currentLoadedProject.Customer;
+                txtProjectEndUser.Text = _currentLoadedProject.Customer;
 
                 //var source1 = new BindingSource();
                 //List<BOM> list = new List<BOM> { new MyStruct("fff", "b"), new MyStruct("c", "d") };

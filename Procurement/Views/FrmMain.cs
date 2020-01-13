@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using StaticClasses;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Procurement.Classes;
 namespace Procurement.Views
 {
     public partial class FrmMain : Form
@@ -19,19 +13,34 @@ namespace Procurement.Views
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            OnFormLoad();
+        }
+        private void OnFormLoad()
+        {
             this.Visible = false;
             FrmLogin frmLogin = new FrmLogin();
             frmLogin.ShowDialog();
 
-            if (LoginInfo.LoginEmployee.EmployeeTypeCode  == 2)
+            if (LoginInfo.LoginEmployee.EmployeeTypeCode == Constants.EMPLOYEE)
             {
                 pnlEmployees.Visible = false;
-            
-            }
-        }
 
+            }
+            else
+            {
+                pnlEmployees.Visible = true;
+
+            }
+            lnkUserName.Text = LoginInfo.LoginEmployee.EmployeeName;
+        }
+        private void lnkUserName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FrmEmployee frmEmp = new FrmEmployee();
+            frmEmp._EmployeeCode = LoginInfo.LoginEmployee.EmployeeCode;
+            frmEmp.Show();
+        }
         #region "Click On Panel"
-        
+
 
         private void pnlProjects_MouseEnter(object sender, EventArgs e)
         {
@@ -103,6 +112,22 @@ namespace Procurement.Views
             FrmEmployee_Show();
         }
 
+
         #endregion "Click On Panel"
+
+        private void btnLogOff_Click(object sender, EventArgs e)
+        {
+            for (int i = Application.OpenForms.Count - 1; i >= 0; i--)
+            {
+                if (Application.OpenForms[i].Name != "FrmMain")
+                {
+                    Application.OpenForms[i].Close();
+                }
+            }
+            //this.InitializeComponent();
+            OnFormLoad();
+        }
+
+        
     }
 }

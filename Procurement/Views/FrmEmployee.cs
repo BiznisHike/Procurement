@@ -12,6 +12,7 @@ using System.Data.OleDb;
 using Repository.DAL;
 using Procurement.Controllers;
 using System.Reflection;
+using StaticClasses;
 
 namespace Procurement
 {
@@ -25,19 +26,21 @@ namespace Procurement
         List<Employee> _LstEmployees;
         List<EmployeeType> _LstEmployeeTypes;
         List<Project> _LstProjects;
-        List<ProjectEmployeeDetail> _LstProjectEmployeeDetail;
         DataTable _dtEmployees;
         DataTable _dtProjects;
-        decimal _EmployeeCode;
+        public decimal _EmployeeCode;
         decimal _maxEmpCode;
         bool _newMode;
-        
+        Employee _currentLoadedEmployee;
         public FrmEmployee()
         {
             InitializeComponent();
         }
         #region "Load On Start"
-
+        public FrmEmployee(decimal pEmployeeCode)
+        {
+            _EmployeeCode = pEmployeeCode;
+        }
 
 
         private void FrmEmployees_Load(object sender, EventArgs e)
@@ -47,11 +50,32 @@ namespace Procurement
                 _ec = new EmployeeController();
                 _etc = new EmployeeTypeController();
                 _pc = new ProjectController();
+                Employee emp = new Employee();
+                if (_EmployeeCode > 0)
+                {// if employee viewing then this code will run... _EmployeeCode value is comming from FrmMain.
+                    emp = _ec.GetModelByID(_EmployeeCode);
+                    _LstEmployees = new List<Employee>();
+                    _LstEmployees.Add(emp);
+                    //disable controls for employee
+                    btnNewEmployee.Visible = false;
+                    btnResize.Visible = false;
+                    splitContainer1.SplitterDistance = 0;
+                    dataGridViewEmployees.Visible = false;
+                    cmbEmployeeType.Enabled = false;
+                    dataGridViewSelectProjects.Enabled = false;
+                    this.Text = emp.EmployeeName;
+                }
+                else
+                {//for manager view
+                    _LstEmployees = _ec.GetModelsByCreatedBy();
 
-                _LstEmployees = _ec.GetModels();
+                }
+
                 _LstEmployeeTypes = _etc.GetModels();
                 _LstProjects = _pc.GetModels();
-                
+
+               
+
 
                 _dtEmployees = ToDataTable<Employee>(_LstEmployees);
                 _dtProjects = ToDataTable<Project>(_LstProjects);
@@ -67,7 +91,7 @@ namespace Procurement
                 _dtProjects.Columns.Remove("BOMs");
                 _dtProjects.Columns.Remove("ProjectEmployeeDetails");
                 _dtProjects.Columns.Add("Select Projects", typeof(Boolean)).SetOrdinal(0);
-                
+
                 dataGridViewSelectProjects.DataSource = _dtProjects;
                 //dataGridViewSelectProjects.Columns["Select Projects"].Width = 30;
 
@@ -108,13 +132,13 @@ namespace Procurement
                 DataView dv = _dtEmployees.DefaultView;
                 dv.Sort = "EmployeeCode desc";
                 _dtEmployees = dv.ToTable();
-                
+
                 dataGridViewEmployees.DataSource = _dtEmployees;
 
 
                 if (_LstEmployees.Count == 0)
                 {
-                    
+
                     _newMode = true;
                     _ec.ReseedPk();
                     //txtProjectCode.Text = (1).ToString();
@@ -162,9 +186,12 @@ namespace Procurement
             {
                 //SaveData();
                 empModel = FillEmployeeModel();
+                empModel.CreatedBy = LoginInfo.LoginEmployee.EmployeeCode;
+                empModel.CreatedDate = DateTime.Now;
+
                 _ec = new EmployeeController(empModel);
                 _ec.Save();
-                _EmployeeCode=empModel.EmployeeCode;
+                _EmployeeCode = empModel.EmployeeCode;
                 //------------------
                 LstPed = FillProjectEmployeeDetailModel();
                 _pedc = new ProjectEmployeeDetailController(LstPed);
@@ -177,7 +204,7 @@ namespace Procurement
                 //NewRow[3] = empModel.ProjectCode;
                 //if (empModel.ProjectCode == null) { NewRow[3] = DBNull.Value; } else { NewRow[3] = empModel.ProjectCode; }
                 //if (empModel.Manager == null){ NewRow[4] = DBNull.Value; } else { NewRow[4] = empModel.Manager; }
-                
+
                 //TO DO
                 //if (empModel.ProjectCode == null) { NewRow[5] = DBNull.Value; } else { NewRow[5] = empModel.EmployeeType.EmployeeType1; }
                 //if (empModel.Manager == null) { NewRow[6] = DBNull.Value; } else { NewRow[6] = empModel.Project.ProjectName; }
@@ -199,6 +226,10 @@ namespace Procurement
             {
                 //UpdateData();
                 empModel = FillEmployeeModel();
+                empModel.CreatedBy = _currentLoadedEmployee.CreatedBy;
+                empModel.CreatedDate = _currentLoadedEmployee.CreatedDate;
+                empModel.UpdatedBy = LoginInfo.LoginEmployee.EmployeeCode;
+                empModel.UpdateDate = DateTime.Now;
                 _ec = new EmployeeController(empModel);
                 _ec.UpdateModel(empModel);
 
@@ -210,7 +241,7 @@ namespace Procurement
                 _LstEmployees.Remove(emp);
                 _LstEmployees.Add(empModel);
 
-                
+
                 foreach (DataRow dr in _dtEmployees.Rows) // search whole table
                 {
                     if (decimal.Parse(dr["EmployeeCode"].ToString()) == empModel.EmployeeCode) // if id==2
@@ -220,8 +251,8 @@ namespace Procurement
                         //if (empModel.Manager == null){ dr["Manager"] = DBNull.Value; } else { dr["Manager"] = empModel.Manager; }
                         //if (empModel.ProjectCode == null) { dr["ProjectCode"] = DBNull.Value; } else { dr["ProjectCode"] = empModel.ProjectCode; }
 
-                        
-                        break;       
+
+                        break;
                     }
                 }
             }
@@ -231,18 +262,20 @@ namespace Procurement
             //_LstProjects
             this.Enabled = true;
 
-           
-        }
-        
 
-        
+        }
+
+
+
         private Employee FillEmployeeModel()
         {
             Employee lObjEmp = new Employee();
             //if (_newMode == false) lObjEmp.EmployeeCode = decimal.Parse(txtEmployeeCode.Text);
             lObjEmp.EmployeeCode = decimal.Parse(txtEmployeeCode.Text);
-            lObjEmp.EmployeeName= txtEmployeeName.Text;
+            lObjEmp.EmployeeName = txtEmployeeName.Text;
             lObjEmp.EmployeeTypeCode = (short)cmbEmployeeType.SelectedValue;
+            lObjEmp.Password = txtPassword.Text;
+            
             //if ((short)cmbEmployeeType.SelectedValue == 1)
             //{
             //    lObjEmp.Manager = decimal.Parse(txtEmployeeCode.Text);//_maxEmpCode;
@@ -272,9 +305,9 @@ namespace Procurement
 
             //}
 
-           
+
             return lObjEmp;
-            
+
         }
         private List<ProjectEmployeeDetail> FillProjectEmployeeDetailModel()
         {
@@ -331,18 +364,27 @@ namespace Procurement
                 if (!string.IsNullOrEmpty(txtEmployeeCode.Text) && _EmployeeCode == decimal.Parse(txtEmployeeCode.Text)) return;
 
                 _ec = new EmployeeController();
-                Employee employee = _ec.GetModelByID(_EmployeeCode);
-                if (employee == null) return;
-                txtEmployeeCode.Text = employee.EmployeeCode.ToString();
-                txtEmployeeName.Text = employee.EmployeeName;
-                cmbEmployeeType.SelectedValue = employee.EmployeeTypeCode;
+                _currentLoadedEmployee = _ec.GetModelByID(_EmployeeCode);
+                if (_currentLoadedEmployee == null) return;
+                txtEmployeeCode.Text = _currentLoadedEmployee.EmployeeCode.ToString();
+                txtEmployeeName.Text = _currentLoadedEmployee.EmployeeName;
+                txtPassword.Text = _currentLoadedEmployee.Password;
+                cmbEmployeeType.SelectedValue = _currentLoadedEmployee.EmployeeTypeCode;
+
+
+                if (_currentLoadedEmployee != null && _currentLoadedEmployee.EmployeeCode == LoginInfo.LoginEmployee.EmployeeCode)
+                { btnShowPassword.Visible = true; }
+                else
+                { btnShowPassword.Visible = false; }
+
+
                 //if (employee.Manager != null)
                 //{cmbManagers.SelectedValue = employee.Manager;}
                 //else
                 //{cmbManagers.SelectedIndex = -1;}
 
-                if (employee.ProjectCode != null)
-                { cmbProjects.SelectedValue = employee.ProjectCode; }
+                if (_currentLoadedEmployee.ProjectCode != null)
+                { cmbProjects.SelectedValue = _currentLoadedEmployee.ProjectCode; }
                 else
                 { cmbProjects.SelectedIndex = -1; }
 
@@ -350,14 +392,14 @@ namespace Procurement
                 //{
 
                 //}
-                
+
                 _dtProjects.Rows.OfType<DataRow>().ToList().ForEach(r => r["Select Projects"] = false);
 
-                
+
                 foreach (DataRow dr in _dtProjects.Rows) // search whole table
                 {
 
-                    if ( employee.ProjectEmployeeDetails.Where(x => x.ProjectCode == (decimal)dr["ProjectCode"]).FirstOrDefault() !=null)
+                    if (_currentLoadedEmployee.ProjectEmployeeDetails.Where(x => x.ProjectCode == (decimal)dr["ProjectCode"]).FirstOrDefault() != null)
                     {
                         dr["Select Projects"] = true;
                     }
@@ -385,15 +427,16 @@ namespace Procurement
             _newMode = true;
         }
 
-         private void SetForNew()
+        private void SetForNew()
         {
 
-            
+
             _maxEmpCode = _ec.GetMaxCode();
             txtEmployeeCode.Text = _maxEmpCode.ToString();
-
+            txtPassword.Text = string.Empty;
+            cmbEmployeeType.SelectedIndex = -1;
             txtEmployeeName.Text = "New Employee " + _maxEmpCode;
-            
+            _dtProjects.Rows.OfType<DataRow>().ToList().ForEach(r => r["Select Projects"] = false);
 
         }
 
@@ -412,7 +455,7 @@ namespace Procurement
             {
                 splitContainer1.SplitterDistance = 49;
             }
-            
+
 
         }
 
@@ -426,14 +469,14 @@ namespace Procurement
                 dataGridViewEmployees.Rows[e.RowIndex].Selected = true;
                 dataGridViewEmployees.Focus();
 
-                
+
             }
         }
         private void dataGridViewEmployees_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                
+
                 MenuStripProjects.Show(Cursor.Position);
             }
         }
@@ -483,6 +526,20 @@ namespace Procurement
             }
         }
 
+        private void btnShowPassword_Click(object sender, EventArgs e)
+        {
+            if (btnShowPassword.ImageKey == "show.png")
+            {
+                btnShowPassword.ImageKey = "hide.png";
+                txtPassword.PasswordChar = '\0';
 
+            }
+            else
+            {
+                btnShowPassword.ImageKey = "show.png";
+                txtPassword.PasswordChar = '●';
+
+            }
+        }
     }
 }

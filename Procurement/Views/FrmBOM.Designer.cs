@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBOM));
             this.txtBOMFilePath = new System.Windows.Forms.TextBox();
-            this.LoadBOM = new System.Windows.Forms.Button();
+            this.btnLoadBOM = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtProjectEndUser = new System.Windows.Forms.TextBox();
@@ -85,18 +85,18 @@
             this.txtBOMFilePath.Size = new System.Drawing.Size(885, 30);
             this.txtBOMFilePath.TabIndex = 0;
             // 
-            // LoadBOM
+            // btnLoadBOM
             // 
-            this.LoadBOM.BackColor = System.Drawing.Color.SteelBlue;
-            this.LoadBOM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LoadBOM.ForeColor = System.Drawing.Color.Transparent;
-            this.LoadBOM.Location = new System.Drawing.Point(901, 65);
-            this.LoadBOM.Name = "LoadBOM";
-            this.LoadBOM.Size = new System.Drawing.Size(97, 32);
-            this.LoadBOM.TabIndex = 1;
-            this.LoadBOM.Text = "Load";
-            this.LoadBOM.UseVisualStyleBackColor = false;
-            this.LoadBOM.Click += new System.EventHandler(this.LoadBOM_Click);
+            this.btnLoadBOM.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLoadBOM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoadBOM.ForeColor = System.Drawing.Color.Transparent;
+            this.btnLoadBOM.Location = new System.Drawing.Point(901, 65);
+            this.btnLoadBOM.Name = "btnLoadBOM";
+            this.btnLoadBOM.Size = new System.Drawing.Size(97, 32);
+            this.btnLoadBOM.TabIndex = 1;
+            this.btnLoadBOM.Text = "Load";
+            this.btnLoadBOM.UseVisualStyleBackColor = false;
+            this.btnLoadBOM.Click += new System.EventHandler(this.LoadBOM_Click);
             // 
             // dataGridView1
             // 
@@ -329,7 +329,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Controls.Add(this.txtProjectCode);
             this.splitContainer1.Panel2.Controls.Add(this.txtBOMFilePath);
-            this.splitContainer1.Panel2.Controls.Add(this.LoadBOM);
+            this.splitContainer1.Panel2.Controls.Add(this.btnLoadBOM);
             this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.btnSave);
@@ -596,7 +596,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtBOMFilePath;
-        private System.Windows.Forms.Button LoadBOM;
+        private System.Windows.Forms.Button btnLoadBOM;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtProjectEndUser;

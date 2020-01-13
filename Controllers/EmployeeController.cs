@@ -1,4 +1,5 @@
 ﻿using Repository.DAL;
+using StaticClasses;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,8 +35,16 @@ namespace Procurement.Controllers
         }
         public List<Employee> GetModels()
         {
+            
             return interfaceObj.GetModels().ToList<Employee>();
         }
+        public List<Employee> GetModelsByCreatedBy()
+        {
+            //return GetModels().ToList<Employee>().Where(x => x.EmployeeCode == LoginInfo.LoginEmployee.EmployeeCode || x.EmployeeTypeCode == Constants.EMPLOYEE).ToList<Employee>();
+            return GetModels().ToList<Employee>().Where(x => x.EmployeeCode == LoginInfo.LoginEmployee.EmployeeCode || x.CreatedBy == LoginInfo.LoginEmployee.EmployeeCode).ToList<Employee>();
+            //return interfaceObj.GetModels().ToList<Employee>();
+        }
+
         public void UpdateModel(Employee model)
         {
             interfaceObj.UpdateModel(model);

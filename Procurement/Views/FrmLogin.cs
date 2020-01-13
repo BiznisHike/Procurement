@@ -1,15 +1,10 @@
-﻿using Procurement.Classes;
-using Procurement.Controllers;
-using Procurement.Views;
+﻿using Procurement.Controllers;
 using Repository.DAL;
+using StaticClasses;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Procurement

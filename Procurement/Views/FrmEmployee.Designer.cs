@@ -46,6 +46,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnNewEmployee = new System.Windows.Forms.Button();
             this.dataGridViewEmployees = new System.Windows.Forms.DataGridView();
+            this.label5 = new System.Windows.Forms.Label();
             this.dataGridViewSelectProjects = new System.Windows.Forms.DataGridView();
             this.cmbManagers = new System.Windows.Forms.ComboBox();
             this.cmbEmployeeType = new System.Windows.Forms.ComboBox();
@@ -54,7 +55,9 @@
             this.cmbProjects = new System.Windows.Forms.ComboBox();
             this.MenuStripProjects = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemDeleteProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.btnShowPassword = new System.Windows.Forms.Button();
             this.MenuStripSaleBOM.SuspendLayout();
             this.MenuStripDesignBOM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,7 +74,7 @@
             this.btnSave.BackColor = System.Drawing.Color.SteelBlue;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.ForeColor = System.Drawing.Color.Transparent;
-            this.btnSave.Location = new System.Drawing.Point(760, 544);
+            this.btnSave.Location = new System.Drawing.Point(760, 593);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(97, 32);
             this.btnSave.TabIndex = 17;
@@ -99,7 +102,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(689, 184);
+            this.label3.Location = new System.Drawing.Point(689, 233);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 17);
             this.label3.TabIndex = 11;
@@ -130,7 +133,7 @@
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.ForeColor = System.Drawing.Color.Black;
             this.btnCancel.ImageKey = "Yes.bmp";
-            this.btnCancel.Location = new System.Drawing.Point(657, 545);
+            this.btnCancel.Location = new System.Drawing.Point(657, 594);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(97, 30);
             this.btnCancel.TabIndex = 19;
@@ -180,6 +183,9 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnShowPassword);
+            this.splitContainer1.Panel2.Controls.Add(this.label6);
+            this.splitContainer1.Panel2.Controls.Add(this.txtPassword);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridViewSelectProjects);
             this.splitContainer1.Panel2.Controls.Add(this.cmbManagers);
@@ -366,6 +372,8 @@
             this.imageList1.Images.SetKeyName(147, "Wrench.bmp");
             this.imageList1.Images.SetKeyName(148, "Yes.bmp");
             this.imageList1.Images.SetKeyName(149, "Zoom.bmp");
+            this.imageList1.Images.SetKeyName(150, "show.png");
+            this.imageList1.Images.SetKeyName(151, "hide.png");
             // 
             // btnNewEmployee
             // 
@@ -402,12 +410,21 @@
             this.dataGridViewEmployees.SelectionChanged += new System.EventHandler(this.dataGridViewEmployees_SelectionChanged);
             this.dataGridViewEmployees.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridViewEmployees_MouseClick);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(50, 289);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(123, 17);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "Permitted Projects";
+            // 
             // dataGridViewSelectProjects
             // 
             this.dataGridViewSelectProjects.AllowUserToAddRows = false;
             this.dataGridViewSelectProjects.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridViewSelectProjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewSelectProjects.Location = new System.Drawing.Point(174, 240);
+            this.dataGridViewSelectProjects.Location = new System.Drawing.Point(174, 289);
             this.dataGridViewSelectProjects.Name = "dataGridViewSelectProjects";
             this.dataGridViewSelectProjects.RowHeadersVisible = false;
             this.dataGridViewSelectProjects.RowHeadersWidth = 51;
@@ -420,7 +437,7 @@
             // 
             this.cmbManagers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbManagers.FormattingEnabled = true;
-            this.cmbManagers.Location = new System.Drawing.Point(467, 184);
+            this.cmbManagers.Location = new System.Drawing.Point(467, 233);
             this.cmbManagers.Name = "cmbManagers";
             this.cmbManagers.Size = new System.Drawing.Size(198, 24);
             this.cmbManagers.TabIndex = 26;
@@ -430,7 +447,7 @@
             // 
             this.cmbEmployeeType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEmployeeType.FormattingEnabled = true;
-            this.cmbEmployeeType.Location = new System.Drawing.Point(174, 184);
+            this.cmbEmployeeType.Location = new System.Drawing.Point(174, 233);
             this.cmbEmployeeType.Name = "cmbEmployeeType";
             this.cmbEmployeeType.Size = new System.Drawing.Size(198, 24);
             this.cmbEmployeeType.TabIndex = 25;
@@ -439,7 +456,7 @@
             // lblManager
             // 
             this.lblManager.AutoSize = true;
-            this.lblManager.Location = new System.Drawing.Point(397, 184);
+            this.lblManager.Location = new System.Drawing.Point(397, 233);
             this.lblManager.Name = "lblManager";
             this.lblManager.Size = new System.Drawing.Size(64, 17);
             this.lblManager.TabIndex = 23;
@@ -449,7 +466,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(67, 184);
+            this.label4.Location = new System.Drawing.Point(67, 233);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(106, 17);
             this.label4.TabIndex = 21;
@@ -459,7 +476,7 @@
             // 
             this.cmbProjects.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProjects.FormattingEnabled = true;
-            this.cmbProjects.Location = new System.Drawing.Point(747, 181);
+            this.cmbProjects.Location = new System.Drawing.Point(747, 230);
             this.cmbProjects.Name = "cmbProjects";
             this.cmbProjects.Size = new System.Drawing.Size(198, 24);
             this.cmbProjects.TabIndex = 20;
@@ -480,14 +497,37 @@
             this.itemDeleteProject.Text = "Delete";
             this.itemDeleteProject.Click += new System.EventHandler(this.itemDeleteProject_Click);
             // 
-            // label5
+            // label6
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(50, 240);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 17);
-            this.label5.TabIndex = 28;
-            this.label5.Text = "Permitted Projects";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(99, 181);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 17);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Password";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(174, 178);
+            this.txtPassword.Multiline = true;
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '●';
+            this.txtPassword.Size = new System.Drawing.Size(198, 30);
+            this.txtPassword.TabIndex = 30;
+            // 
+            // btnShowPassword
+            // 
+            this.btnShowPassword.BackColor = System.Drawing.Color.White;
+            this.btnShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowPassword.ForeColor = System.Drawing.Color.Transparent;
+            this.btnShowPassword.ImageKey = "show.png";
+            this.btnShowPassword.ImageList = this.imageList1;
+            this.btnShowPassword.Location = new System.Drawing.Point(373, 174);
+            this.btnShowPassword.Name = "btnShowPassword";
+            this.btnShowPassword.Size = new System.Drawing.Size(40, 40);
+            this.btnShowPassword.TabIndex = 22;
+            this.btnShowPassword.UseVisualStyleBackColor = false;
+            this.btnShowPassword.Click += new System.EventHandler(this.btnShowPassword_Click);
             // 
             // FrmEmployee
             // 
@@ -540,6 +580,9 @@
         private System.Windows.Forms.ComboBox cmbManagers;
         private System.Windows.Forms.DataGridView dataGridViewSelectProjects;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.Button btnShowPassword;
     }
 }
 

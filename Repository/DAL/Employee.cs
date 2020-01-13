@@ -26,6 +26,10 @@ namespace Repository.DAL
         public Nullable<decimal> ProjectCode { get; set; }
         public Nullable<decimal> Manager { get; set; }
         public string Password { get; set; }
+        public Nullable<decimal> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<decimal> UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     
         public virtual EmployeeType EmployeeType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
